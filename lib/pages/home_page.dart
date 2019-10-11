@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advancing/pages/articles_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,13 +11,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Meus Artigos"),
+        title: Text("Meus feeds"),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: RaisedButton(
           child: Text("Avançar"),
           onPressed: () {
-            print("Vai para a segunda página");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ArticlePage()),
+            );
           },
         ),
       ),
