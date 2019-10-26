@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advancing/pages/home_page.dart';
 
 class ThirdPage extends StatefulWidget {
   @override
@@ -20,8 +19,7 @@ class _ThirdPageState extends State<ThirdPage> {
           RaisedButton(
             child: Text('Retornar para Home'),
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.pushNamed(context, '/');
             },
           ),
           RaisedButton(
