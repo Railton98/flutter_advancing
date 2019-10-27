@@ -7,6 +7,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,20 +15,26 @@ class _HomePageState extends State<HomePage> {
         title: Text("Meus feeds"),
         automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: RaisedButton(
-          child: Text("Avançar"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ArticlePage(
-                  feed: 'https://blog.schoolofnet.com/feed',
-                ),
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                keyboardType: TextInputType.url,
+                decoration: InputDecoration(labelText: "Link do RSS"),
               ),
-            );
-            // Navigator.pushNamed(context, '/article');
-          },
+              RaisedButton(
+                child: Text("Cadastrar"),
+                color: Colors.green,
+                textColor: Colors.white,
+                onPressed: () {
+                  print("adicionou");
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
