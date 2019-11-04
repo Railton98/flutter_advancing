@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advancing/pages/articles_page.dart';
+import 'package:flutter_advancing/data/save_local.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,8 +11,18 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final feedController = TextEditingController();
 
+  List feeds = [];
+
   @override
   Widget build(BuildContext context) {
+    SaveLocal persistence = new SaveLocal(feedList: feeds);
+
+    setState(() {
+      persistence.read().then((data) {
+        feeds = data;
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Meus feeds"),
@@ -23,6 +34,20 @@ class _HomePageState extends State<HomePage> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+              Expanded(
+                child: ListView.builder(
+                  itemCount: feeds.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(feeds[index]),
+                      leading: Icon(Icons.rss_feed),
+                      onTap: () {
+                        print(index.toString());
+                      },
+                    );
+                  },
+                ),
+              ),
               TextFormField(
                 keyboardType: TextInputType.url,
                 controller: feedController,
@@ -39,8 +64,12 @@ class _HomePageState extends State<HomePage> {
                 textColor: Colors.white,
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    print(feedController.text);
-                    feedController.text = '';
+                    setState(() {
+                      feeds.add(feedController.text);
+                      feedController.text = "";
+
+                      persistence.save(feeds);
+                    });
                   }
                 },
               ),
