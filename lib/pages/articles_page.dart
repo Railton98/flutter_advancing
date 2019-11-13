@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advancing/data/get_feed_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticlePage extends StatefulWidget {
   final String feed;
@@ -24,6 +25,7 @@ class _ArticlePageState extends State<ArticlePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de artigos'),
+        leading: Icon(Icons.rss_feed),
       ),
       body: FutureBuilder(
         future: articles,
@@ -46,6 +48,12 @@ class _ArticlePageState extends State<ArticlePage> {
               return listArticles(snapshot.data);
               break;
           }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
         },
       ),
     );
@@ -79,7 +87,14 @@ listArticles(List articles) {
               subtitle: Text(articles[index]['link']),
               leading: Icon(Icons.open_in_browser),
               onTap: () {
-                print(articles[index]['link']);
+                String url = articles[index]['link'];
+                canLaunch(url).then((isConfirmed) {
+                  if (isConfirmed) {
+                    launch(url);
+                  } else {
+                    throw "Cloud not launch $url";
+                  }
+                });
               },
             );
           },
