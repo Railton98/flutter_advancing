@@ -17,8 +17,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     SaveLocal persistence = new SaveLocal(feedList: feeds);
 
-    setState(() {
-      persistence.read().then((data) {
+    persistence.read().then((data) {
+      setState(() {
         feeds = data;
       });
     });
@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                   if (value.isEmpty) {
                     return "Campo não pode ficar em branco";
                   }
+                  return null;
                 },
               ),
               RaisedButton(

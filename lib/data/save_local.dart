@@ -1,6 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 
 class SaveLocal {
@@ -11,7 +10,7 @@ class SaveLocal {
   Future<File> get fileFeed async {
     Directory dir = await getApplicationDocumentsDirectory();
     File file = File(dir.path + "/feeds.json");
-    
+
     if (!file.existsSync()) {
       await save(feedList);
     }
