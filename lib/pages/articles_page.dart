@@ -43,10 +43,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   icon: Icons.error,
                 );
               }
-              return messageTemplate(
-                title: 'Lista de artigos carregada',
-                icon: Icons.done,
-              );
+              return listArticles(snapshot.data);
               break;
           }
         },
@@ -67,5 +64,27 @@ messageTemplate({String title, IconData icon}) {
         Text(title)
       ],
     ),
+  );
+}
+
+listArticles(List articles) {
+  return Column(
+    children: <Widget>[
+      Expanded(
+        child: ListView.builder(
+          itemCount: articles.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(articles[index]['title']),
+              subtitle: Text(articles[index]['link']),
+              leading: Icon(Icons.open_in_browser),
+              onTap: () {
+                print(articles[index]['link']);
+              },
+            );
+          },
+        ),
+      )
+    ],
   );
 }
